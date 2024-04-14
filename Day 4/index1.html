@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+</head>
+
+<body>
+    <div class="color-hover">
+        <div class="color red" style="background-color: red;">red</div>
+        <div class="color cyan" style="background-color: cyan;">orange</div>
+        <div class="color violet" style="background-color: violet;">violet</div>
+        <div class="color orange" style="background-color: orange;">orange</div>
+        <div class="color pink" style="background-color: pink;">pink</div>
+    </div>
+    <div class="center">selected</div>
+
+    <script>
+        let red = document.querySelector('.red')
+        let cyan = document.querySelector('.cyan')
+        let violet = document.querySelector('.violet')
+        let orange = document.querySelector('.orange')
+        let pink = document.querySelector('.pink')
+
+        let center = document.querySelector('.center')
+
+        let getBGColor = (color) => {
+            return window.getComputedStyle(color).backgroundColor
+        }
+
+        // let getElementColors = getBGColor(orange)
+        // console.log(getElementColors)
+
+
+        // center.addEventListener('mouseenter', () => {
+        //     center.style.background = getElementColors
+        // })
+
+        let magicColorChanger = (element, color) => {
+            element.addEventListener('mouseenter', () => {
+                center.style.background = color;..
+            })
+        }
+
+        magicColorChanger(red, getBGColor(red))
+        magicColorChanger(cyan, getBGColor(cyan))
+        magicColorChanger(violet, getBGColor(violet))
+        magicColorChanger(orange, getBGColor(orange))
+        magicColorChanger(pink, getBGColor(pink))
+
+    </script>
+
+</body>
+
+</html>

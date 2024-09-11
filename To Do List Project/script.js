@@ -5,6 +5,7 @@ const todoList = document.querySelector('.todo-list');
 const filterOption = document.querySelector('.filter-todo');
 
 // Event Listeners
+document.addEventListener('DOMContentLoaded', saveLocalTodos)
 todoButton.addEventListener('click', addTodo)
 todoList.addEventListener('click', deleteCheck)
 filterOption.addEventListener('click', filterTodo)
@@ -52,6 +53,7 @@ function deleteCheck(event) {
         todo.addEventListener('transitionend', function () {
             todo.remove();
         });
+        deleteLocalValues(todo);
     }
 
     if (item.classList[0] === 'complete-btn') {
@@ -106,7 +108,7 @@ function saveLocalTodos(todo) {
     else {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
-    if (todo) {
+    if (typeof todo !== 'object' && typeof todo !== 'function') {
         todos.push(todo);
         localStorage.setItem('todos', JSON.stringify(todos));
     }
@@ -117,5 +119,11 @@ function saveLocalTodos(todo) {
     }
 }
 
-saveLocalTodos()
+function deleteLocalValues(todo){
+    let todos = JSON.parse(localStorage.getItem('todos'));
+    let todoToDelete = todo.innerText;
+    todos = todos.filter(function(elem){
+        return elem !== todoToDelete});
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
 

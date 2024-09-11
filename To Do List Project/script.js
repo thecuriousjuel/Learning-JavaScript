@@ -14,7 +14,8 @@ filterOption.addEventListener('click', filterTodo)
 function addTodo(event) {
     event.preventDefault();
     if (!todoInput.value) {
-
+        alert('No value entered')
+        return
     }
 
     const todoDiv = document.createElement('div');
@@ -58,11 +59,19 @@ function deleteCheck(event) {
 
 function filterTodo(event) {
     const todos = todoList.childNodes;
-    console.log(`todos=${todos}`)
+    const eventType = event.type;
+    const targetElement = event.target;
+    const parentElement = targetElement.parentNode;
+    // console.log("Event type:", eventType);
+    // console.log("Target element:", targetElement);
+    // console.log("Parent element:", parentElement);
+    // console.log(`todos=${todos} ${typeof todos}`)
     todos.forEach(function (todo) {
-        console.log(`todo=${todo.value}`)
+        if (todo.nodeType !== Node.ELEMENT_NODE){
+            return
+        }
+        // console.log(`todo=${todo}`);
         switch (event.target.value) {
-            
             case "all":
                 todo.style.display = 'flex';
                 break
@@ -73,20 +82,17 @@ function filterTodo(event) {
                 else {
                     todo.style.display = 'none';
                 }
+                break
+            default:
+                if(!todo.classList.contains('completed')){
+                    todo.style.display = 'flex'
+                }
+                else{
+                    todo.style.display = 'none';
+                }
         }
     });
 }
 
-
-{/* <div class="todo">
-    <i class="fa-solid fa-circle-xmark">Hello!
-        <button class="complete-btn">
-            <i class="fas fa-check"> </i>
-        </button>
-        <button class="complete-btn">
-            <i class="fas fa-trash"> </i>
-        </button>
-    </i>
-</div>  */}
 
 

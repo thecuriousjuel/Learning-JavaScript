@@ -11,20 +11,14 @@ filterOption.addEventListener('click', filterTodo)
 
 // Functions
 
-function addTodo(event) {
-    event.preventDefault();
-    if (!todoInput.value) {
-        alert('No value entered')
-        return
-    }
-
+function createTodoList(value) {
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo');
     todoList.appendChild(todoDiv)
 
     const newTodo = document.createElement('li');
     newTodo.classList.add('todo-item');
-    newTodo.innerText = todoInput.value;
+    newTodo.innerText = value;
     todoDiv.appendChild(newTodo);
 
     const completedButton = document.createElement('button');
@@ -36,7 +30,16 @@ function addTodo(event) {
     trashButton.innerHTML = '<i class="fas fa-trash"> </i>'
     trashButton.classList.add("trash-btn");
     todoDiv.appendChild(trashButton);
+}
 
+function addTodo(event) {
+    event.preventDefault();
+    if (!todoInput.value) {
+        alert('No value entered')
+        return
+    }
+    createTodoList(todoInput.value);
+    saveLocalTodos(todoInput.value);
     todoInput.value = '';
 }
 
@@ -67,7 +70,7 @@ function filterTodo(event) {
     // console.log("Parent element:", parentElement);
     // console.log(`todos=${todos} ${typeof todos}`)
     todos.forEach(function (todo) {
-        if (todo.nodeType !== Node.ELEMENT_NODE){
+        if (todo.nodeType !== Node.ELEMENT_NODE) {
             return
         }
         // console.log(`todo=${todo}`);
@@ -84,15 +87,35 @@ function filterTodo(event) {
                 }
                 break
             case "uncompleted":
-                if(!todo.classList.contains('completed')){
+                if (!todo.classList.contains('completed')) {
                     todo.style.display = 'flex'
                 }
-                else{
+                else {
                     todo.style.display = 'none';
                 }
         }
     });
 }
 
+function saveLocalTodos(todo) {
+    // Check for existing todos in browser storage
+    let todos;
+    if (!localStorage.getItem('todos')) {
+        todos = [];
+    }
+    else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    if (todo) {
+        todos.push(todo);
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
+    else{
+        todos.forEach(function (todo) {
+            createTodoList(todo)
+        });
+    }
+}
 
+saveLocalTodos()
 

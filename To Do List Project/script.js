@@ -83,7 +83,7 @@ function filterTodo(event) {
                     todo.style.display = 'none';
                 }
                 break
-            default:
+            case "uncompleted":
                 if(!todo.classList.contains('completed')){
                     todo.style.display = 'flex'
                 }
